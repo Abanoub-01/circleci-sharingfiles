@@ -1,23 +1,25 @@
 version 2.1
+
 jobs:
   save_hello_world_output:
     docker:
       - image: circleci/node:13.8.0
     steps:
       - run: echo "hello world!"
-      -presist_to_worksapce:
+      - presist_to_worksapce:
         root: ~/
-          paths:
-            - output.txt
+        paths:
+          - output.txt
   print_output_file:
     docker:
       - image: circleci/node:13.8.0
     steps:
       - attach_workspace:
           at: ~/
-      - run: cat ~/output.txt      
+      - run: cat ~/output.txt
+
 workflows:
   my_workflow:
     - save_hello_world_output
     - print_output_file:
-       requires: save_hello_world_output
+      requires: save_hello_world_output
